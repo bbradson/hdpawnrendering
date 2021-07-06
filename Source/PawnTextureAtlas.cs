@@ -31,7 +31,7 @@ namespace Fish
 
         public static bool CodesToChange(List<CodeInstruction> codes, int i)
         {
-            return i < codes.Count - 1 &&
+            return i < codes.Count - 5 &&
                    codes[i].opcode == OpCodes.Ldc_I4 && codes[i].operand is int m && m == 0x800 &&
                    codes[i + 1].opcode == OpCodes.Ldc_I4 && codes[i + 1].operand is int n && n == 0x800 &&
                    codes[i + 2].opcode == OpCodes.Ldc_I4_S &&
