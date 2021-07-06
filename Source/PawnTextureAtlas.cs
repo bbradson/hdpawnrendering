@@ -9,37 +9,6 @@ using Verse;
 
 namespace Fish
 {
-    /*public static class PawnTextureAtlas
-    {
-        //Comments further down
-        public static IEnumerable<CodeInstruction> FishPawnRenderTranspiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
-        {
-            var codes = instructions.ToList();
-            for (int i = 0; i < codes.Count; i++)
-            {
-                if (CodesToChange(codes, i))
-                {
-                    codes[i].operand = 0x2000;
-                    yield return codes[i];
-                    codes[i + 1].operand = 0x2000;
-                    yield return codes[i + 1];
-                    i += 1;
-                }
-                else
-                {
-                    yield return codes[i];
-                }
-            }
-        }
-
-        public static bool CodesToChange(List<CodeInstruction> codes, int i)
-        {
-            return i < codes.Count - 1 &&
-                   codes[i].opcode == OpCodes.Ldc_I4 && codes[i].operand is int m && m == 0x800 &&
-                   codes[i + 1].opcode == OpCodes.Ldc_I4 && codes[i + 1].operand is int n && n == 0x800;
-        }
-    }*/
-
     public static class PawnTextureAtlas
     {
         //Comments further down
@@ -50,7 +19,6 @@ namespace Fish
             {
                 if (CodesToChange(codes, i))
                 {
-                    codes[i].operand = 0x2000;
                     yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(FixedTexture), nameof(FixedTexture.Create)));
                     i += 5;
                 }

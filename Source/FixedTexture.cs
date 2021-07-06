@@ -23,13 +23,6 @@ namespace Fish
                 tex.mipMapBias = mMbias;
             }
             return tex;
-
-            /*return new RenderTexture(8192, 8192, 24, RenderTextureFormat.ARGB32, 0)
-            {
-                antiAliasing = AAlevel,
-                mipMapBias = MMbias,
-                useMipMap = true
-            };*/
         }
 
         public const float mMbias = -0.7f;
