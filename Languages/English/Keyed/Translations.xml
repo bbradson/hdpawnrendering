@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LanguageData>
+
+	<HDPR.Name>HD Pawn Rendering</HDPR.Name>
+	<HDPR.ResButton>Pawn Texture Resolution:</HDPR.ResButton>
+	<HDPR.ResInfo>The resolution used for pawn rendering. Vanilla is 128, this mod's default is 512.</HDPR.ResInfo>
+	<HDPR.MipsButton>Enable MipMaps</HDPR.MipsButton>
+	<HDPR.MipsInfo>This improves texture quality and fps when zooming out, while slightly increasing VRAM usage. Recommended ON</HDPR.MipsInfo>
+	<HDPR.Experimental>Experimental:</HDPR.Experimental>
+	<HDPR.AAButton>Enable Anti-Aliasing</HDPR.AAButton>
+	<HDPR.AAInfo>Only use if you really want to waste some VRAM. In my own testing this resulted in an increase of 4x. Recommended OFF</HDPR.AAInfo>
+	<HDPR.AALevelButton>Anti-Aliasing level:</HDPR.AALevelButton>
+	<HDPR.AALevelInfo>The level of anti-aliasing. Higher is stronger and more resource-intensive</HDPR.AALevelInfo>
+
+</LanguageData>
