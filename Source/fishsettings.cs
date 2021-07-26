@@ -1,9 +1,4 @@
 ﻿using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
@@ -14,14 +9,16 @@ namespace Fish
     {
         public void DoSettingsWindowContents(Rect inRect)
         {
+            const int increment = 64;
+
             if (!initialized)
             {
                 Initialize();
                 initialized = true;
             }
 
-            Rect rekt = new Rect(15f, 75f, inRect.width - 30f, inRect.height);
-            Listing_Standard ls = new Listing_Standard();
+            Rect rekt = new(15f, 75f, inRect.width - 30f, inRect.height);
+            Listing_Standard ls = new();
             ls.Begin(rekt);
 
             var textFieldRect = ls.GetRect(Text.LineHeight);
@@ -30,16 +27,14 @@ namespace Fish
                 TooltipHandler.TipRegion(textFieldRect, fishResInfo);
             }
             var texRes = TextureResolution;
-            //Widgets.TextFieldNumericLabeled<int>(textFieldRect, "Pawn Texture Resolution: ", ref texRes, ref buffer, 64f, 4096f); //This text field is fucking trash.
 
-            TaggedString texResString = fishResButton;
+            var texResString = fishResButton;
             textFieldRect.width = texResString.GetWidthCached();
             Widgets.Label(textFieldRect, texResString);
 
             textFieldRect.x += textFieldRect.width + 12f;
             textFieldRect.width = 42f;
 
-            const int increment = 64;
             if (Widgets.ButtonText(textFieldRect, "-" + increment, true, true, true))
             {
                 SoundDefOf.DragSlider.PlayOneShotOnCamera(null);
@@ -80,7 +75,7 @@ namespace Fish
                 FixedTexture.aAlevel = (int)Widgets.HorizontalSlider(sliderRect.BottomHalf(), FixedTexture.aAlevel, 2f, 16f, label: FixedTexture.aAlevel.ToString(), roundTo: 1f);
                 if (Mouse.IsOver(sliderRect))
                 {
-                    TooltipHandler.TipRegion(sliderRect, new TipSignal(fishLevelInfo, 0f));
+                    TooltipHandler.TipRegion(sliderRect, fishLevelInfo);
                 }
             }
 
@@ -88,18 +83,15 @@ namespace Fish
             base.Write();
         }
 
-        public void InstantCheckboxLabeled(Rect rect, string label, ref bool checkOn, string tooltip = null)
+        public void InstantCheckboxLabeled(Rect rect, string label, ref bool checkOn, TipSignal tooltip)
         {
             float lineHeight = Text.LineHeight;
-            if (!tooltip.NullOrEmpty())
+            if (Mouse.IsOver(rect))
             {
-                if (Mouse.IsOver(rect))
-                {
-                    Widgets.DrawHighlight(rect);
-                    TooltipHandler.TipRegion(rect, new TipSignal(tooltip, 0f));
-                }
+                Widgets.DrawHighlight(rect);
+                TooltipHandler.TipRegion(rect, tooltip);
             }
-            Widgets.CheckboxLabeled(rect, label, ref checkOn, false, null, null, false);
+            Widgets.CheckboxLabeled(rect, label, ref checkOn);
         }
 
         public int TextureResolution
@@ -111,29 +103,26 @@ namespace Fish
         public void Initialize()
         {
             fishResButton = "HDPR.ResButton".Translate();
-            fishResInfo = new TipSignal("HDPR.ResInfo".Translate(), 0f);
+            fishResInfo = new("HDPR.ResInfo".Translate(), 0f);
             fishMipsButton = "HDPR.MipsButton".Translate();
-            fishMipsInfo = "HDPR.MipsInfo".Translate();
+            fishMipsInfo = new("HDPR.MipsInfo".Translate(), 0f);
             fishExperimental = "HDPR.Experimental".Translate();
             fishAAButton = "HDPR.AAButton".Translate();
-            fishAAInfo = "HDPR.AAInfo".Translate();
+            fishAAInfo = new("HDPR.AAInfo".Translate(), 0f);
             fishLevelButton = "HDPR.AALevelButton".Translate();
-            fishLevelInfo = "HDPR.AALevelInfo".Translate();
+            fishLevelInfo = new("HDPR.AALevelInfo".Translate(), 0f);
         }
 
         private bool initialized = false;
-        private string fishResButton;
+        private TaggedString fishResButton;
         private TipSignal fishResInfo;
         private string fishMipsButton;
-        private string fishMipsInfo;
+        private TipSignal fishMipsInfo;
         private string fishExperimental;
         private string fishAAButton;
-        private string fishAAInfo;
+        private TipSignal fishAAInfo;
         private string fishLevelButton;
-        private string fishLevelInfo;
-
-        public static string buffer = "512";
-        public static FloatRange aArange = new FloatRange(2f, 16f);
+        private TipSignal fishLevelInfo;
 
         public override void ExposeData()
         {

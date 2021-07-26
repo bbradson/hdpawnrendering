@@ -15,5 +15,8 @@
 			<downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
 		</li>
 	</modDependencies>
+	<loadAfter>
+		<li>brrainz.harmony</li>
+	</loadAfter>
 	<description>Increases the pawn render resolution from 128x128 to 512x512 or a user defined choice, enabling high res apparel and race mods to work correctly. Comes with settings for resolution, mip maps and anti-aliasing.</description>
 </ModMetaData>

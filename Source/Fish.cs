@@ -1,6 +1,5 @@
-﻿using Verse;
-using HarmonyLib;
-using UnityEngine;
+﻿using HarmonyLib;
+using Verse;
 
 namespace Fish
 {
@@ -11,11 +10,8 @@ namespace Fish
 
         public Fish(ModContentPack content) : base(content)
         {
-            //Harmony.DEBUG = false;
-            //FileLog.Reset();
-
-            Harmony ha = new Harmony("fish");
-            ha.Patch(original: AccessTools.Constructor(typeof(Verse.PawnTextureAtlas)), transpiler: new HarmonyMethod(typeof(PawnTextureAtlas), nameof(PawnTextureAtlas.FishPawnRenderTranspiler)));
+            Harmony ha = new("fish");
+            ha.Patch(AccessTools.Constructor(typeof(Verse.PawnTextureAtlas)), transpiler: new(typeof(PawnTextureAtlas).GetMethod(nameof(PawnTextureAtlas.FishPawnRenderTranspiler)), Priority.First));
 
             settings = GetSettings<fishsettings>();
             mod = this;
@@ -34,7 +30,7 @@ namespace Fish
         private bool initialized = false;
         private string fishName;
 
-        public override void DoSettingsWindowContents(Rect inRect)
+        public override void DoSettingsWindowContents(UnityEngine.Rect inRect)
         {
             base.DoSettingsWindowContents(inRect);
             settings.DoSettingsWindowContents(inRect);

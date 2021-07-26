@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using Verse;
+﻿using UnityEngine;
 
 namespace Fish
 {
-    public class FixedTexture
+    public static class FixedTexture
     {
         public static RenderTexture Create()
         {
-            var tex = new RenderTexture(textureResolution, textureResolution, 24, RenderTextureFormat.ARGB32, 0);
+            RenderTexture tex = new(textureResolution, textureResolution, 24, RenderTextureFormat.ARGB32);
             if (aAenabled)
             {
                 tex.antiAliasing = aAlevel;
