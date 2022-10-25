@@ -1,28 +1,38 @@
-﻿using UnityEngine;
+﻿// Copyright (c) 2022 bradson
+// This Source Code Form is subject to the terms of the MIT license.
+// If a copy of the license was not distributed with this file,
+// You can obtain one at https://opensource.org/licenses/MIT/.
 
-namespace Fish
+namespace Fish;
+
+public static class FixedTexture
 {
-    public static class FixedTexture
-    {
-        public static RenderTexture Create()
-        {
-            RenderTexture tex = new(textureResolution, textureResolution, 24, RenderTextureFormat.ARGB32);
-            if (aAenabled)
-            {
-                tex.antiAliasing = aAlevel;
-            }
-            if (mMenabled)
-            {
-                tex.useMipMap = true;
-                tex.mipMapBias = mMbias;
-            }
-            return tex;
-        }
+	public static RenderTexture Create()
+	{
+		RenderTexture tex = new(TextureResolution, TextureResolution, 24, RenderTextureFormat.ARGB32);
+		if (AAenabled)
+		{
+			tex.antiAliasing = AAlevel;
+		}
+		if (MipMapsEnabled)
+		{
+			tex.useMipMap = true;
+			tex.mipMapBias = MipMapBias;
+		}
+		return tex;
+	}
 
-        public const float mMbias = -0.7f;
-        public static int textureResolution = 8192;
-        public static bool aAenabled = false;
-        public static bool mMenabled = true;
-        public static int aAlevel = 4;
-    }
+	public static void Scribe()
+	{
+		Scribe_Values.Look(ref AAenabled, "AAenabled", false);
+		Scribe_Values.Look(ref MipMapsEnabled, "MMenabled", true);
+		Scribe_Values.Look(ref AAlevel, "AAlevel", 4);
+		Scribe_Values.Look(ref TextureResolution, "textureResolution", 8192);
+	}
+
+	public static float MipMapBias = -0.7f;
+	public static int TextureResolution = 8192;
+	public static bool AAenabled = false;
+	public static bool MipMapsEnabled = true;
+	public static int AAlevel = 4;
 }

@@ -1,39 +1,39 @@
-﻿using HarmonyLib;
-using Verse;
+﻿// Copyright (c) 2022 bradson
+// This Source Code Form is subject to the terms of the MIT license.
+// If a copy of the license was not distributed with this file,
+// You can obtain one at https://opensource.org/licenses/MIT/.
 
-namespace Fish
+global using System;
+global using System.Collections.Generic;
+global using UnityEngine;
+global using Verse;
+global using HarmonyLib;
+
+namespace Fish;
+
+public class Fish : Mod
 {
-    public class Fish : Mod
-    {
-        public static Fish mod;
-        public static fishsettings settings;
+	public static Fish? Mod { get; private set; }
+	public static fishsettings? Settings { get; private set; }
 
-        public Fish(ModContentPack content) : base(content)
-        {
-            Harmony ha = new("fish");
-            ha.Patch(AccessTools.Constructor(typeof(Verse.PawnTextureAtlas)), transpiler: new(typeof(PawnTextureAtlas).GetMethod(nameof(PawnTextureAtlas.FishPawnRenderTranspiler)), Priority.First));
+	public Fish(ModContentPack content) : base(content)
+	{
+		Harmony harmony = new("fish");
 
-            settings = GetSettings<fishsettings>();
-            mod = this;
-        }
+		if (Type.GetType("GraphicSetter.GraphicsPatches+PawnTextureAtlasCtorPatch, GraphicSetter") is { } graphicsSetterType)
+			harmony.Unpatch(AccessTools.Constructor(typeof(Verse.PawnTextureAtlas)), AccessTools.Method(graphicsSetterType, "Transpiler"));
 
-        public override string SettingsCategory()
-        {
-            if (!initialized)
-            {
-                fishName = "HDPR.Name".Translate();
-                initialized = true;
-            }
-            return fishName;
-        }
+		harmony.Patch(AccessTools.Constructor(typeof(Verse.PawnTextureAtlas)), transpiler: new(((Delegate)PawnTextureAtlas.FishPawnRenderTranspiler).Method, Priority.First));
 
-        private bool initialized = false;
-        private string fishName;
+		Settings = GetSettings<fishsettings>();
+		Mod = this;
+	}
 
-        public override void DoSettingsWindowContents(UnityEngine.Rect inRect)
-        {
-            base.DoSettingsWindowContents(inRect);
-            settings.DoSettingsWindowContents(inRect);
-        }
-    }
+	public override string SettingsCategory() => Strings.ModName;
+
+	public override void DoSettingsWindowContents(Rect inRect)
+	{
+		base.DoSettingsWindowContents(inRect);
+		fishsettings.DoSettingsWindowContents(inRect);
+	}
 }
