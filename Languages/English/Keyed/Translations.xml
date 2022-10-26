@@ -4,7 +4,7 @@
 
 	<HDPR.Name>HD Pawn Rendering</HDPR.Name>
 	<HDPR.ResButton>Pawn Texture Resolution:</HDPR.ResButton>
-	<HDPR.ResInfo>The resolution used for pawn rendering. Vanilla is 128, this mod's default is 512.</HDPR.ResInfo>
+	<HDPR.ResInfo>The resolution used for pawn rendering. Vanilla is 128, this mod's default is 384.</HDPR.ResInfo>
 	<HDPR.MipsButton>Enable MipMaps</HDPR.MipsButton>
 	<HDPR.MipsInfo>This improves texture quality and fps when zooming out, while slightly increasing VRAM usage. Recommended ON</HDPR.MipsInfo>
 	<HDPR.Experimental>Experimental:</HDPR.Experimental>

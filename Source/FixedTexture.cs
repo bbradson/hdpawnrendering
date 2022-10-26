@@ -10,10 +10,10 @@ public static class FixedTexture
 	public static RenderTexture Create()
 	{
 		RenderTexture tex = new(TextureResolution, TextureResolution, 24, RenderTextureFormat.ARGB32);
-		if (AAenabled)
+		/*if (AAenabled)
 		{
 			tex.antiAliasing = AAlevel;
-		}
+		}*/
 		if (MipMapsEnabled)
 		{
 			tex.useMipMap = true;
@@ -27,11 +27,11 @@ public static class FixedTexture
 		Scribe_Values.Look(ref AAenabled, "AAenabled", false);
 		Scribe_Values.Look(ref MipMapsEnabled, "MMenabled", true);
 		Scribe_Values.Look(ref AAlevel, "AAlevel", 4);
-		Scribe_Values.Look(ref TextureResolution, "textureResolution", 8192);
+		Scribe_Values.Look(ref TextureResolution, "textureResolution", 6144);
 	}
 
 	public static float MipMapBias = -0.7f;
-	public static int TextureResolution = 8192;
+	public static int TextureResolution = 6144;
 	public static bool AAenabled = false;
 	public static bool MipMapsEnabled = true;
 	public static int AAlevel = 4;

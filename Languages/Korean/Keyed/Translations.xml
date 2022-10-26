@@ -4,7 +4,7 @@
 
 	<HDPR.Name>HD Pawn Rendering</HDPR.Name>
 	<HDPR.ResButton>폰 텍스쳐 해상도:</HDPR.ResButton>
-	<HDPR.ResInfo>폰 렌더링에 사용할 해상도입니다. 바닐라는 128이고, 이 모드의 기본값은 512입니다.</HDPR.ResInfo>
+	<HDPR.ResInfo>폰 렌더링에 사용할 해상도입니다. 바닐라는 128이고, 이 모드의 기본값은 384입니다.</HDPR.ResInfo>
 	<HDPR.MipsButton>밉맵 사용</HDPR.MipsButton>
 	<HDPR.MipsInfo>줌아웃했을 때 텍스쳐 품질과 FPS를 향상시키지만, 약간 VRAM 사용량을 늘립니다. 기본값: 켜기</HDPR.MipsInfo>
 	<HDPR.Experimental>실험적:</HDPR.Experimental>

@@ -10,7 +10,7 @@ namespace Fish;
 
 public static class PawnTextureAtlas
 {
-	public static IEnumerable<CodeInstruction> FishPawnRenderTranspiler(IEnumerable<CodeInstruction> instructions)
+	public static CodeInstructions FishPawnRenderTranspiler(CodeInstructions instructions)
 	{
 		var codes = instructions.ToArray();
 		var success = false;

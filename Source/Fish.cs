@@ -6,8 +6,10 @@
 global using System;
 global using System.Collections.Generic;
 global using UnityEngine;
+global using RimWorld;
 global using Verse;
 global using HarmonyLib;
+global using CodeInstructions = System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>;
 
 namespace Fish;
 
@@ -24,6 +26,10 @@ public class Fish : Mod
 			harmony.Unpatch(AccessTools.Constructor(typeof(Verse.PawnTextureAtlas)), AccessTools.Method(graphicsSetterType, "Transpiler"));
 
 		harmony.Patch(AccessTools.Constructor(typeof(Verse.PawnTextureAtlas)), transpiler: new(((Delegate)PawnTextureAtlas.FishPawnRenderTranspiler).Method, Priority.First));
+
+#if V1_4
+		harmony.Patch(PawnRenderer.TargetMethod, transpiler: new(((Delegate)PawnRenderer.Transpiler).Method));
+#endif
 
 		Settings = GetSettings<fishsettings>();
 		Mod = this;
