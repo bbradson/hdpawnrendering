@@ -4,16 +4,19 @@
 // You can obtain one at https://opensource.org/licenses/MIT/.
 
 using System.Linq;
-using static System.Reflection.Emit.OpCodes;
 
 namespace Fish;
 
+[HarmonyPatch(typeof(Verse.PawnTextureAtlas), MethodType.Constructor)]
 public static class PawnTextureAtlas
 {
+	[HarmonyTranspiler]
+	[HarmonyPriority(Priority.First)]
 	public static CodeInstructions FishPawnRenderTranspiler(CodeInstructions instructions)
 	{
 		var codes = instructions.ToArray();
 		var success = false;
+
 		for (var i = 0; i < codes.Length; i++)
 		{
 			if (CodesToChange(codes, i))
@@ -40,12 +43,12 @@ public static class PawnTextureAtlas
 
 	public static bool CodesToChange(CodeInstruction[] codes, int i)
 		=> i + 5 < codes.Length
-		&& codes[i].opcode == Ldc_I4 && codes[i].operand is int m && m == 0x800
-		&& codes[i + 1].opcode == Ldc_I4 && codes[i + 1].operand is int n && n == 0x800
-		&& codes[i + 2].opcode == Ldc_I4_S
-		&& codes[i + 3].opcode == Ldc_I4_0
-		&& codes[i + 4].opcode == Ldc_I4_0
-		&& codes[i + 5].opcode == Newobj;
+		&& codes[i].opcode == OpCodes.Ldc_I4 && codes[i].operand is int m && m == 0x800
+		&& codes[i + 1].opcode == OpCodes.Ldc_I4 && codes[i + 1].operand is int n && n == 0x800
+		&& codes[i + 2].opcode == OpCodes.Ldc_I4_S
+		&& codes[i + 3].opcode == OpCodes.Ldc_I4_0
+		&& codes[i + 4].opcode == OpCodes.Ldc_I4_0
+		&& codes[i + 5].opcode == OpCodes.Newobj;
 }
 
 /// <summary>

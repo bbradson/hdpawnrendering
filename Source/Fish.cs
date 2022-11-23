@@ -4,11 +4,10 @@
 // You can obtain one at https://opensource.org/licenses/MIT/.
 
 global using System;
-global using System.Collections.Generic;
-global using UnityEngine;
-global using RimWorld;
-global using Verse;
+global using System.Reflection.Emit;
 global using HarmonyLib;
+global using UnityEngine;
+global using Verse;
 global using CodeInstructions = System.Collections.Generic.IEnumerable<HarmonyLib.CodeInstruction>;
 
 namespace Fish;
@@ -17,19 +16,14 @@ public class Fish : Mod
 {
 	public static Fish? Mod { get; private set; }
 	public static fishsettings? Settings { get; private set; }
+	public static Harmony Harmony { get; } = new("fish");
 
 	public Fish(ModContentPack content) : base(content)
 	{
-		Harmony harmony = new("fish");
-
 		if (Type.GetType("GraphicSetter.GraphicsPatches+PawnTextureAtlasCtorPatch, GraphicSetter") is { } graphicsSetterType)
-			harmony.Unpatch(AccessTools.Constructor(typeof(Verse.PawnTextureAtlas)), AccessTools.Method(graphicsSetterType, "Transpiler"));
+			Harmony.Unpatch(AccessTools.Constructor(typeof(Verse.PawnTextureAtlas)), AccessTools.Method(graphicsSetterType, "Transpiler"));
 
-		harmony.Patch(AccessTools.Constructor(typeof(Verse.PawnTextureAtlas)), transpiler: new(((Delegate)PawnTextureAtlas.FishPawnRenderTranspiler).Method, Priority.First));
-
-#if V1_4
-		harmony.Patch(PawnRenderer.TargetMethod, transpiler: new(((Delegate)PawnRenderer.Transpiler).Method));
-#endif
+		Harmony.PatchAll(typeof(Fish).Assembly);
 
 		Settings = GetSettings<fishsettings>();
 		Mod = this;

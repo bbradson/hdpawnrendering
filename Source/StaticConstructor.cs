@@ -13,5 +13,11 @@ public static class StaticConstructor
 		// Disable disableCaching (and in turn re-enable it)
 		if (Type.GetType("VFECore.VFEGlobal, VFECore")?.GetField("settings")?.GetValue(null) is { } vEFsettings)
 			Type.GetType("VFECore.VFEGlobalSettings, VFECore")?.GetField("disableCaching")?.SetValue(vEFsettings, false);
+
+		if (HarmonyPatches.HumanoidAlienRaces.HarmonyPatches_TextureAtlasSameRace.Prepare())
+		{
+			foreach (var nestedType in typeof(HarmonyPatches.HumanoidAlienRaces).GetNestedTypes())
+				Fish.Harmony.CreateClassProcessor(nestedType).Patch();
+		}
 	}
 }
